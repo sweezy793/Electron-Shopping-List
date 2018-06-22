@@ -2,7 +2,7 @@ const electron =require('electron');
 const url=require('url');
 const path=require('path');
 
-const {app,BrowserWindow}=electron;
+const {app,BrowserWindow,Menu}=electron;
 
 let mainWindow;
 
@@ -16,4 +16,31 @@ mainWindow=new BrowserWindow({});
         protocol:'file:',
         slashes:true
     }));
+
+    //Build menu from template
+    const mainMenu=Menu.buildFromTemplate(mainMenuTemplate);
+    //Insert Menu
+    Menu.setApplicationMenu(mainMenu);
 });
+
+//Create menu template
+const mainMenuTemplate=[
+    {
+        label:'File',
+        submenu:[
+            {
+                label:'Add Item'
+            },
+            {
+                label:'Clear Items'
+            },
+            {
+                label:'Quit',
+                accelerator:'CmdOrCtrl+Q',
+                click(){
+                    app.quit();
+                }
+            }
+        ]
+    }
+];
