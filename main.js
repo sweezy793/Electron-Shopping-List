@@ -2,7 +2,7 @@ const electron =require('electron');
 const url=require('url');
 const path=require('path');
 
-const {app,BrowserWindow,Menu}=electron;
+const {app,BrowserWindow,Menu,ipcMain}=electron;
 
 let mainWindow;
 let addWindow;
@@ -48,6 +48,13 @@ function createAddWindow(){
     });
 
 }
+
+//Catch item:add
+ipcMain.on('item:add',function(e,item){
+    console.log(item);
+    mainWindow.webContents.send('item:add',item);
+    addWindow.close();
+});
 
 //Create menu template
 const mainMenuTemplate=[
